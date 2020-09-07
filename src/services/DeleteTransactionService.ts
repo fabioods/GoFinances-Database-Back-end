@@ -10,9 +10,7 @@ interface Request {
 class DeleteTransactionService {
   public async execute({ id }: Request): Promise<void> {
     const transactionRepo = getCustomRepository(TransactionsRepository);
-    const transaction = ((await transactionRepo.findByIds([
-      id,
-    ])) as Transaction[])[0];
+    const transaction = await transactionRepo.findOne(id);
 
     if (!transaction) {
       throw new AppError('Transaction id does not exists');
